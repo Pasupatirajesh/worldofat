@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.course.udacity.android.worldofat.IntroActivity"
+    tools:showIn="@layout/activity_intro">
+
+    <TextView
+        android:id="@+id/assist_tech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="Roman"
+        android:text="@string/assistive_technology"
+        android:textSize="24sp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.067"/>
+
+    <TextView
+        android:id="@+id/assist_tech_brief"
+        android:layout_width="369dp"
+        android:layout_height="246dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/asstivie_technology_brief"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assist_tech"
+        app:layout_constraintVertical_bias="0.129"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="306dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/assist_tech_brief"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/assist_tech_brief"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/frag_viewpager"
+        android:layout_width="372dp"
+        android:layout_height="141dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assist_tech_brief">
+
+
+        <FrameLayout
+            android:id="@+id/assist_tech_photo_frag_frame_layout"
+            android:layout_width="372dp"
+            android:layout_height="141dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assist_tech_brief"
+            app:layout_constraintVertical_bias="0.272"/>
+
+    </android.support.v4.view.ViewPager>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_pic_frag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>
