@@ -2,7 +2,6 @@ package com.course.udacity.android.worldofat;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,13 +18,15 @@ import android.view.View;
 import com.course.udacity.android.worldofat.Model.GettyImageModel;
 import com.course.udacity.android.worldofat.Networking.Controller;
 
+import java.util.ArrayList;
+
 public class IntroActivity extends AppCompatActivity implements PictureFragment.OnFragmentInteractionListener {
 
     private static final String TAG = IntroActivity.class.getSimpleName() ;
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
-    private static GettyImageModel mGettyImageModel;
-    static Parcelable myParcel;
+    private static String uri="";
+    private static ArrayList<String> pictureUri = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_pic_frag);
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,25 +44,23 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
                 Controller controller = new Controller(getApplicationContext());
 
                 controller.start();
-
-
                 controller.setDataInterfaceListener(new Controller.DataInterface() {
                     @Override
                     public void responseData(GettyImageModel gettyImageModel) {
-                        Log.i(TAG,gettyImageModel.getResultCount()+"");
+
+                        Log.i(TAG, gettyImageModel.getResultCount() + "");
+                        for (GettyImageModel.Image image : gettyImageModel.getImages()) {
+                            for (int i=0; i < image.getDisplaySizes().size(); i++) {
+                                pictureUri.add(image.getDisplaySizes().get(i).getUri());
+                            }
+                        }
+                        mViewPager = findViewById(R.id.frag_viewpager);
+                        mPagerAdapter = new PhotoSlideFragmentPagerAdapter(getSupportFragmentManager());
+                        mViewPager.setAdapter(mPagerAdapter);
                     }
                 });
-
-
-
-
             }
         });
-
-
-        mViewPager = findViewById(R.id.frag_viewpager);
-        mPagerAdapter = new PhotoSlideFragmentPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPagerAdapter);
     }
 
     @Override
@@ -91,25 +91,21 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
     }
 
     public class PhotoSlideFragmentPagerAdapter extends FragmentStatePagerAdapter{
-
-//        private final Bundle fragmentBundle;
-
         public PhotoSlideFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
-//            this.fragmentBundle = fragmentBundle;
         }
 
         @Override
         public Fragment getItem(int position) {
-            PictureFragment f = new PictureFragment();
-//            f.setArguments();
-            return f;
+
+            uri = pictureUri.get(position);
+            Log.i(TAG, uri);
+            return PictureFragment.newInstance(uri);
         }
 
         @Override
         public int getCount() {
-
-                return 20;
+            return 50;
         }
     }
 }

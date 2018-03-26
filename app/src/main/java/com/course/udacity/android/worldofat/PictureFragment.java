@@ -35,6 +35,7 @@ public class PictureFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Uri mUri;
 
+    private Context mContext;
     public PictureFragment() {
         // Required empty public constructor
     }
@@ -43,29 +44,23 @@ public class PictureFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+
      * @return A new instance of fragment PictureFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PictureFragment newInstance(String param1, String param2) {
+    public static PictureFragment newInstance(String mUri) {
         PictureFragment fragment = new PictureFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("URI", mUri);
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            final Bundle args = getArguments();
-            String uriString = args.getString("URI");
-//            mUri = Uri.parse(uriString);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        final Bundle args = getArguments();
+        String uriString = args.getString("URI");
+        mUri = Uri.parse(uriString);
     }
 
     @Override
@@ -74,7 +69,7 @@ public class PictureFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.photo_fragment, container, false);
         mImageView = v.findViewById(R.id.assistive_tech_pics);
-        Picasso.get().load("https://media.gettyimages.com/photos/one-piece-of-medicine-divided-into-small-pieces-picture-id921574660?b=1&k=6&m=921574660&s=170x170&h=o6jJf5BO250zjGIDHf_ao0Ig0CNxyC-ZcOlBVhN5ui8=\"").into(mImageView);
+        Picasso.get().load(mUri).into(mImageView);
         return v;
     }
 
