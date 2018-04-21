@@ -1,7 +1,9 @@
 package com.course.udacity.android.worldofat;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,9 +16,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.course.udacity.android.worldofat.Model.GettyImageModel;
 import com.course.udacity.android.worldofat.Networking.Controller;
+import com.course.udacity.android.worldofat.Fragment.PictureFragment;
 
 import java.util.ArrayList;
 
@@ -27,6 +31,25 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
     private PagerAdapter mPagerAdapter;
     private static String uri="";
     private static ArrayList<String> pictureUri = new ArrayList<>();
+    private static int page=0;
+    private Handler mHandler;
+
+    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (getSupportFragmentManager().getFragments().size() == 0) {
+                mHandler.removeCallbacks(mRunnable);
+            } else {
+                if (mPagerAdapter.getCount() == page) {
+                    page = 0;
+                } else {
+                    page++;
+                }
+                mViewPager.setCurrentItem(page, true);
+                mHandler.postDelayed(this, 5000);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +58,8 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_pic_frag);
+
+        mHandler = new Handler();
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,10 +82,48 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
                         mViewPager = findViewById(R.id.frag_viewpager);
                         mPagerAdapter = new PhotoSlideFragmentPagerAdapter(getSupportFragmentManager());
                         mViewPager.setAdapter(mPagerAdapter);
+                        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                            @Override
+                            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                            }
+
+                            @Override
+                            public void onPageSelected(int position) {
+                                    page = position;
+                            }
+
+                            @Override
+                            public void onPageScrollStateChanged(int state) {
+
+                            }
+                        });
                     }
                 });
             }
         });
+
+        Button mDetailButton = findViewById(R.id.detail_view_button);
+        mDetailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myActivity = new Intent(IntroActivity.this, DetailActivity.class);
+                startActivity(myActivity);
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mHandler.postDelayed(mRunnable, 5000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(mRunnable);
     }
 
     @Override
@@ -105,7 +168,7 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
 
         @Override
         public int getCount() {
-            return 50;
+            return pictureUri.size();
         }
     }
 }

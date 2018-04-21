@@ -12,10 +12,10 @@ public class GettyImageModel {
 
     @SerializedName("result_count")
     @Expose
-    private Integer resultCount;
+    public Integer resultCount;
     @SerializedName("images")
     @Expose
-    private List<Image> images = null;
+    public List<Image> images = null;
 
     public Integer getResultCount() {
         return resultCount;
@@ -37,13 +37,13 @@ public class GettyImageModel {
 
         @SerializedName("is_watermarked")
         @Expose
-        private Boolean isWatermarked;
+        public Boolean isWatermarked;
         @SerializedName("name")
         @Expose
-        private String name;
+        public String name;
         @SerializedName("uri")
         @Expose
-        private String uri;
+        public String uri;
 
         public Boolean getIsWatermarked() {
             return isWatermarked;
@@ -75,25 +75,25 @@ public class GettyImageModel {
 
         @SerializedName("id")
         @Expose
-        private String id;
+        public String id;
         @SerializedName("asset_family")
         @Expose
-        private String assetFamily;
+        public String assetFamily;
         @SerializedName("caption")
         @Expose
-        private String caption;
+        public String caption;
         @SerializedName("collection_code")
         @Expose
-        private String collectionCode;
+        public String collectionCode;
         @SerializedName("collection_id")
         @Expose
-        private Integer collectionId;
+        public Integer collectionId;
         @SerializedName("collection_name")
         @Expose
-        private String collectionName;
+        public String collectionName;
         @SerializedName("display_sizes")
         @Expose
-        private List<DisplaySize> displaySizes = null;
+        public List<DisplaySize> displaySizes = null;
 
         public String getId() {
             return id;
