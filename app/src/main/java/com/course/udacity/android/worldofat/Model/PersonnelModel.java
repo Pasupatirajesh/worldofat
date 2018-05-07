@@ -22,14 +22,12 @@ public class PersonnelModel {
         this.mContext = context;
     }
 
-    private String[] name = new String[] {"Glenn Hedman", "Kathy Hooyenga",
-            "Pat Politano","Fani Lee", "Kathy Waldera","Sathya Subramanian",
-            "Brenda Sposato", "James Graham"};
+    private String[] name = new String[] {"xyz", "ABC", "LIVE", "NOT LIVE",
+    "MNOP", "PORS", "RADISH"};
 
-    private String[] email = new String[]{"ghedman@uic.edu","hooyenga@uic.edu",
-            "politano@uic.edu", "flee9@uic.edu","kwalde3@uic.edu", "ssubra27@uic.edu",
-            "sposato@uic.edu",  "jlgraham@uic.edu"};
-    private String[] image = mContext != null ? mContext.getAssets().list("pictures") : new String[0];
+    private String[] email = new String[]{"xyz@example.com", "abc@example.com", "pqrs@example.com",
+    "lobster@example.com", "dai@example.com", "kova@example.com", "radish@example.com"};
+    private String[] image = new String[]{};
 
     public Context getContext() {
         return mContext;

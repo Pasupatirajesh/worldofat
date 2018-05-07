@@ -2,13 +2,25 @@ package com.course.udacity.android.worldofat.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.course.udacity.android.jrogen.JobGenerator;
+import com.course.udacity.android.jrogen.Jobs;
+import com.course.udacity.android.jrogen.MyClass;
 import com.course.udacity.android.worldofat.R;
+
+import net.ugolok.generation.JROFactory;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -20,16 +32,10 @@ import com.course.udacity.android.worldofat.R;
  * create an instance of this fragment.
  */
 public class AtuCertificateFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private TextView mTextView;
+    private TextView mLocationTextView;
     private OnFragmentInteractionListener mListener;
+    private ArrayList<Jobs> mJobsArrayList = new ArrayList<>();
 
     public AtuCertificateFragment() {
         // Required empty public constructor
@@ -47,8 +53,6 @@ public class AtuCertificateFragment extends Fragment {
     public static AtuCertificateFragment newInstance(String param1, String param2) {
         AtuCertificateFragment fragment = new AtuCertificateFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,17 +60,40 @@ public class AtuCertificateFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+//         Trying to use the jrogen library to generate random objects.
+        mJobsArrayList.add(MyClass.getRandomJobsObject());
+        Log.i("TAG", mJobsArrayList.get(0).getJobName()+"");
+
+//         Another approach that I tried to do was using it this way, this approach, I tried using by importing the library into the app module,
+//         this also threw a Configuration Exception.
+//         Error log says its unable to find file at src/ pathName. // Java.io.FileNotFoundException
+
+        Iterator iterator = JROFactory.create(JobGenerator.class).iterator();
+
+        while (iterator.hasNext()){
+//            Jobs j = iterator.next().getJobs();
+//            Log.i("TAG",j.getJobId()+"");
+
+//             Trying to write the random objects to a Firebase Database and retrieve later to display to user.
         }
+
+
+
+
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_atu_certificate, container, false);
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_atu_certificate,
+                container, false);
+        mTextView = v.findViewById(R.id.jobs_disp_tv);
+        mLocationTextView = v.findViewById(R.id.textView);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -90,7 +117,7 @@ public class AtuCertificateFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     /**

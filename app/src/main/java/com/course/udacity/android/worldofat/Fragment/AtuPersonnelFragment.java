@@ -39,11 +39,11 @@ public class AtuPersonnelFragment extends Fragment  {
 
     private OnFragmentInteractionListener mListener;
 
-   private RecyclerView mRecyclerView;
-   private RecyclerView.LayoutManager mLayoutManager;
-   private PersonnelRecyclerView mPersonnelRecyclerView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private PersonnelRecyclerView mPersonnelRecyclerView;
 
-   private CardView mCardView;
+    private CardView mCardView;
 
     public AtuPersonnelFragment() {
         // Required empty public constructor

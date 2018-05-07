@@ -90,7 +90,7 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
 
                             @Override
                             public void onPageSelected(int position) {
-                                    page = position;
+                                page = position;
                             }
 
                             @Override
