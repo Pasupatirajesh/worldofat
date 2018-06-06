@@ -6,21 +6,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.course.udacity.android.jrogen.JobGenerator;
-import com.course.udacity.android.jrogen.Jobs;
-import com.course.udacity.android.jrogen.MyClass;
+import com.course.udacity.android.worldofat.Jobs;
 import com.course.udacity.android.worldofat.R;
-
-import net.ugolok.generation.JROFactory;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 
 /**
@@ -28,6 +24,7 @@ import java.util.Iterator;
  * Activities that contain this fragment must implement the
  * {@link AtuCertificateFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
+ *
  * Use the {@link AtuCertificateFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -35,7 +32,9 @@ public class AtuCertificateFragment extends Fragment {
     private TextView mTextView;
     private TextView mLocationTextView;
     private OnFragmentInteractionListener mListener;
-    private ArrayList<Jobs> mJobsArrayList = new ArrayList<>();
+
+
+    public static final String FIREBASE_PRIMARY_CHILD_NODE = "jobsearch";
 
     public AtuCertificateFragment() {
         // Required empty public constructor
@@ -62,21 +61,25 @@ public class AtuCertificateFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 //         Trying to use the jrogen library to generate random objects.
-        mJobsArrayList.add(MyClass.getRandomJobsObject());
-        Log.i("TAG", mJobsArrayList.get(0).getJobName()+"");
+//        mJobsArrayList.add(MyClass.getRandomJobsObject());
+//        Log.i("TAG", mJobsArrayList.get(0).getJobName()+"");
 
 //         Another approach that I tried to do was using it this way, this approach, I tried using by importing the library into the app module,
 //         this also threw a Configuration Exception.
 //         Error log says its unable to find file at src/ pathName. // Java.io.FileNotFoundException
+//        try {
+//            Iterator<com.course.udacity.android.worldofat.JobGenerator> iterator = JROFactory.create(com.course.udacity.android.worldofat.JobGenerator.class).iterator();
+//            while (iterator.hasNext()){
+//                Jobs j = iterator.next().getJobs();
+//                Log.i("TAG",j.getJobId()+"");
+////
+//////             Trying to write the random objects to a Firebase Database and retrieve later to display to user.
+//            }
+//
+//        }catch (ConfigurationException exception){
+//
+//        }
 
-        Iterator iterator = JROFactory.create(JobGenerator.class).iterator();
-
-        while (iterator.hasNext()){
-//            Jobs j = iterator.next().getJobs();
-//            Log.i("TAG",j.getJobId()+"");
-
-//             Trying to write the random objects to a Firebase Database and retrieve later to display to user.
-        }
 
 
 
@@ -93,7 +96,27 @@ public class AtuCertificateFragment extends Fragment {
         mTextView = v.findViewById(R.id.jobs_disp_tv);
         mLocationTextView = v.findViewById(R.id.textView);
 
+        DatabaseReference mRef = FirebaseDatabase.getInstance()
+                .getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE);
+
+        mRef.push().setValue(new Jobs("Occupational Therapist", 3,"NewYork"));
+
+        Query query = FirebaseDatabase.getInstance().getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE)
+                .orderByChild("jobName").equalTo("Occupational Therapist");
+
+        Toast.makeText(getActivity(), query.toString(), Toast.LENGTH_LONG).show();
+
+//        query.addListenerForSingleValueEvent(valueEventListener);
+
         return v;
+    }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -112,6 +135,7 @@ public class AtuCertificateFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
     }
 
     @Override

@@ -17,7 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/pictures'] } }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/pictures']
+    //        main.srcDirs = ['/src/main/java/isr-cities.dta']
+    }
+    }
 }
 
 dependencies {
@@ -40,8 +45,8 @@ dependencies {
     annotationProcessor 'org.parceler:parceler:1.1.9'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    implementation project(path: ':jrogen')
+//    implementation project(path: ':jrogen')
+    implementation files('libs/jrogen-master-0.1.0.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

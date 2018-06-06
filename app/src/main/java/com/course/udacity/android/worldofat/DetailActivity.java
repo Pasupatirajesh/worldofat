@@ -12,14 +12,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuPersonnelFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import static com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment.FIREBASE_PRIMARY_CHILD_NODE;
 
 public class DetailActivity extends AppCompatActivity implements AtuFragment.OnFragmentInteractionListener, AtuPersonnelFragment.OnFragmentInteractionListener,
         AtuCertificateFragment.OnFragmentInteractionListener {
@@ -27,6 +38,8 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
     private TabLayout mTabLayout;
     private SearchView searchView;
+    private ArrayList<com.course.udacity.android.worldofat.Jobs> mJobsArrayList = new ArrayList<>();
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -62,13 +75,16 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
             }
         });
+    }
+
+
 
 //        Intent intent = getIntent();
 //        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
 //            String query = intent.getStringExtra(SearchManager.QUERY);
 //            queryJob(query);
 //        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,7 +112,8 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
                     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                         @Override
                         public boolean onQueryTextSubmit(String query) {
-//                            queryJob(query);
+
+                            queryJob(query);
                             return true;
                         }
 
@@ -113,28 +130,43 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
     }
 
-//    private void queryJob(String s) {
-//        String key = FirebaseDatabase.getInstance().getReference().getKey();
-//        Query jobq = FirebaseDatabase.getInstance().getReference().child("name").endAt(s, "LAv2RMSkoWXb2KY6gEL");
+    private void queryJob(String s) {
+
+        Query query = FirebaseDatabase.getInstance().getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE)
+                .orderByChild("jobName").equalTo(s);
+
+//        if(!query.getRef().child(FIREBASE_PRIMARY_CHILD_NODE).child("jobName").toString().equals(s)){
 //
-//       jobq.addListenerForSingleValueEvent(new ValueEventListener() {
-//           @Override
-//           public void onDataChange(DataSnapshot dataSnapshot) {
-//               for(DataSnapshot dataSnap : dataSnapshot.getChildren()) {
-//
-//                   Jobs answer = dataSnap.getValue(Jobs.class);
-//                   Log.i("ANSWER", answer.getJobName());
-//                   Toast.makeText(getApplicationContext(), answer.getJobName(), Toast.LENGTH_SHORT).show();
-//               }
-//               }
-//
-//           @Override
-//           public void onCancelled(DatabaseError databaseError) {
-//
-//           }
-//
-//       });
-//    }
+//            Log.i(TAG, "Search value doesn't return anything");
+//        }else {
+            query.addListenerForSingleValueEvent(valueEventListener);
+//        }
+    }
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            mJobsArrayList.clear();
+            if(dataSnapshot.exists()){
+                for(DataSnapshot jobSnapshot : dataSnapshot.getChildren()){
+
+
+                    com.course.udacity.android.worldofat.Jobs j = jobSnapshot.getValue(com.course.udacity.android.worldofat.Jobs.class);
+                    mJobsArrayList.add(j);
+                    Log.i("mJobsArrayList", mJobsArrayList.get(0).getJobName());
+
+                    Toast.makeText(getApplicationContext(), mJobsArrayList.get(0).getJobName(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     @Override
     public void onFragmentInteraction(Uri uri) {
