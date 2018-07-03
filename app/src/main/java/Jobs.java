@@ -1,10 +1,13 @@
 package com.course.udacity.android.worldofat;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Jobs {
 
-    private String jobName;
-    private int jobId;
-    private String location;
+    String jobName;
+    int jobId;
+    String location;
 
     public Jobs(){
 

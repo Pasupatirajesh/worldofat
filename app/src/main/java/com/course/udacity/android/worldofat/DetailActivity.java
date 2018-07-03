@@ -12,34 +12,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuPersonnelFragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-
-import static com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment.FIREBASE_PRIMARY_CHILD_NODE;
 
 public class DetailActivity extends AppCompatActivity implements AtuFragment.OnFragmentInteractionListener, AtuPersonnelFragment.OnFragmentInteractionListener,
-        AtuCertificateFragment.OnFragmentInteractionListener {
-
+        AtuCertificateFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener {
 
     private TabLayout mTabLayout;
-    private SearchView searchView;
-    private ArrayList<com.course.udacity.android.worldofat.Jobs> mJobsArrayList = new ArrayList<>();
     private static final String TAG = DetailActivity.class.getSimpleName();
+    private SearchView searchView;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -53,7 +40,7 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
         mTabLayout = findViewById(R.id.detail_view_tablayout);
         mTabLayout.addTab(mTabLayout.newTab().setText("ATU"));
         mTabLayout.addTab(mTabLayout.newTab().setText("ATU PERSONNEL"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("ATU CERTIFICATE"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("BLANK CERTIFICATE"));
 
         final ViewPager viewPager = findViewById(R.id.detailView_view_pager);
         final PagerAdapter mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
@@ -77,15 +64,6 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
         });
     }
 
-
-
-//        Intent intent = getIntent();
-//        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            queryJob(query);
-//        }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -97,6 +75,8 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setQueryHint("Search Jobs");
 
         return super.onCreateOptionsMenu(menu);
 
@@ -110,11 +90,19 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
                 if (item.getItemId() == R.id.action_search) {
 
                     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
                         @Override
                         public boolean onQueryTextSubmit(String query) {
+                            android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager()
+                            .beginTransaction();
 
-                            queryJob(query);
+                            ft .replace(R.id.fragment_atu_certificate, AtuCertificateFragment.newInstance(query));
+                            ft.addToBackStack(null);
+                            ft.commit();
+
+
                             return true;
+
                         }
 
                         @Override
@@ -129,44 +117,6 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
         return super.onOptionsItemSelected(item);
 
     }
-
-    private void queryJob(String s) {
-
-        Query query = FirebaseDatabase.getInstance().getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE)
-                .orderByChild("jobName").equalTo(s);
-
-//        if(!query.getRef().child(FIREBASE_PRIMARY_CHILD_NODE).child("jobName").toString().equals(s)){
-//
-//            Log.i(TAG, "Search value doesn't return anything");
-//        }else {
-            query.addListenerForSingleValueEvent(valueEventListener);
-//        }
-    }
-
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            mJobsArrayList.clear();
-            if(dataSnapshot.exists()){
-                for(DataSnapshot jobSnapshot : dataSnapshot.getChildren()){
-
-
-                    com.course.udacity.android.worldofat.Jobs j = jobSnapshot.getValue(com.course.udacity.android.worldofat.Jobs.class);
-                    mJobsArrayList.add(j);
-                    Log.i("mJobsArrayList", mJobsArrayList.get(0).getJobName());
-
-                    Toast.makeText(getApplicationContext(), mJobsArrayList.get(0).getJobName(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -184,12 +134,13 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
         @Override
         public Fragment getItem(int position) {
+            AtuCertificateFragment fragment;
             switch (position){
                 case 0: return new AtuFragment();
 
                 case 1: return new AtuPersonnelFragment();
 
-                case 2: return new AtuCertificateFragment();
+                case 2: return new BlankFragment();
 
                 default:
                         return null;
@@ -204,6 +155,4 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
 
 }
-
-
 

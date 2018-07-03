@@ -29,8 +29,6 @@ public final class JobGenerator{
     public com.course.udacity.android.worldofat.Jobs getJobs() {
         return new com.course.udacity.android.worldofat.Jobs(name, id, location);
     }
-
-
 }
 
 
