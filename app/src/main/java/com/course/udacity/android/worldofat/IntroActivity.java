@@ -1,7 +1,10 @@
 package com.course.udacity.android.worldofat;
 
+import android.app.PictureInPictureParams;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -17,10 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.course.udacity.android.worldofat.Fragment.PictureFragment;
 import com.course.udacity.android.worldofat.Model.GettyImageModel;
 import com.course.udacity.android.worldofat.Networking.Controller;
-import com.course.udacity.android.worldofat.Fragment.PictureFragment;
 
 import java.util.ArrayList;
 
@@ -33,6 +38,7 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
     private static ArrayList<String> pictureUri = new ArrayList<>();
     private static int page=0;
     private Handler mHandler;
+    private ImageButton pipBtn;
 
     Runnable mRunnable = new Runnable() {
         @Override
@@ -103,15 +109,49 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
             }
         });
 
+        pipBtn = findViewById(R.id.btn_minimize);
+
+
+        pipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Build.VERSION.SDK_INT>= 26){
+                    try{
+                        PictureInPictureParams mParams =
+                                new PictureInPictureParams.Builder()
+                                .build();
+                        enterPictureInPictureMode(mParams);
+
+                    }catch (IllegalStateException ioe){
+                        ioe.printStackTrace();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "Not Supported",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
         Button mDetailButton = findViewById(R.id.detail_view_button);
         mDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myActivity = new Intent(IntroActivity.this, DetailActivity.class);
                 startActivity(myActivity);
-
-            }
+                }
         });
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+
+        if(!isInPictureInPictureMode){
+            pipBtn.setVisibility(View.VISIBLE);
+        }else{
+            pipBtn.setVisibility(View.GONE);
+        }
     }
 
     @Override

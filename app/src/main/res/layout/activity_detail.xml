@@ -16,12 +16,20 @@
         android:elevation="6dp"
         android:minHeight="?attr/actionBarSize"/>
 
-    <android.support.v4.view.ViewPager
+
+        <android.support.v4.view.ViewPager
         android:id="@+id/detailView_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+
+
+    </FrameLayout>
+        </android.support.v4.view.ViewPager>
 
 
 </android.support.constraint.ConstraintLayout>
