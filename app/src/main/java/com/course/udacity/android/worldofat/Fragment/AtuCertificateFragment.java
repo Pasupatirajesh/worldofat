@@ -2,6 +2,9 @@ package com.course.udacity.android.worldofat.Fragment;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
@@ -33,6 +37,12 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.infoedge.android.arandomizer.DroidGenerator;
+import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import static com.course.udacity.android.worldofat.R.id.jobname_tv;
 
@@ -49,6 +59,8 @@ public class AtuCertificateFragment extends BaseContainerFragment{
 
     private static String searchString;
 
+    private static String mJobNameText;
+
     private TextView mEmptyView;
 
     public static final String FIREBASE_PRIMARY_CHILD_NODE = "jobsearch";
@@ -56,6 +68,15 @@ public class AtuCertificateFragment extends BaseContainerFragment{
     private SearchView mSearchView;
 
     private static ActionMode.Callback2 mActionModeCb = null;
+
+    private View loadingView;
+
+    private View errorView;
+
+    private View emptyView;
+
+    private static StatesRecyclerViewAdapter statesRecyclerViewAdapter;
+
 
     public static interface ClickListener {
 
@@ -89,28 +110,40 @@ public class AtuCertificateFragment extends BaseContainerFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        DatabaseReference mRef = FirebaseDatabase.getInstance()
-                .getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE);
-
-        mRef.push().setValue(new Jobs("Occupational Therapist", 3,"NewYork"));
-
-        // Inflate the layout for this fragment
         View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_atu_certificate,
                 container, false);
+
+        DroidGenerator<Jobs> generator = new DroidGenerator<>(Jobs.class);
+
+        ArrayList<Jobs> jobsList = (ArrayList<Jobs>) generator.generate(5);
+
+        for(int i=0; i< jobsList.size(); i++) {
+
+            Jobs j = jobsList.get(i);
+
+            Log.i("JOBSHOOD", j.getJobName() + "");
+
+            DatabaseReference mRef = FirebaseDatabase.getInstance()
+                    .getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE);
+
+            mRef.push().setValue(j);
+        }
+            // Inflate the layout for this fragment
         return v;
+
     }
+
+
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mEmptyView = view.findViewById(R.id.empty_tv);
-
         mRecyclerView = view.findViewById(R.id.certificate_rv);
-
-        mEmptyView.setVisibility(View.INVISIBLE);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        emptyView = getLayoutInflater().inflate(R.layout.view_empty, mRecyclerView, false);
+        loadingView = getLayoutInflater().inflate(R.layout.view_loading, mRecyclerView, false);
+        errorView = getLayoutInflater().inflate(R.layout.view_error, mRecyclerView, false);
+
+
 
         registerForContextMenu(mRecyclerView);
 
@@ -139,6 +172,17 @@ public class AtuCertificateFragment extends BaseContainerFragment{
                             case R.id.cut_copy_menu:
 //                   // What happens when menu option is chosen inside the floating menu
                                 Toast.makeText(getContext(), "ROX", Toast.LENGTH_LONG).show();
+                                Intent keepIntent = new Intent(Intent.ACTION_SEND);
+                                keepIntent.putExtra(Intent.EXTRA_TEXT, "hi");
+
+                                PackageManager pkm = Objects.requireNonNull(getActivity()).getPackageManager();
+                                List<ResolveInfo> activities = pkm.queryIntentActivities(keepIntent,
+                                        PackageManager.MATCH_DEFAULT_ONLY);
+
+                                boolean isIntentSafe = activities.size() >0;
+                                if(isIntentSafe){
+                                    startActivity(keepIntent);
+                                }
                                 actionMode.finish();
                                 return true;
 
@@ -148,6 +192,7 @@ public class AtuCertificateFragment extends BaseContainerFragment{
                                 return true;
                             default:
                                 return false;
+                                
                         }
 
                     }
@@ -157,6 +202,10 @@ public class AtuCertificateFragment extends BaseContainerFragment{
                     }
                 };
 
+                //Find out difference between activity.startactionmode and textview.setcustomselectionActionmode
+
+                Objects.requireNonNull(getActivity()).startActionMode(mActionModeCb,ActionMode.TYPE_FLOATING);
+
                 TextView mJobName = mRecyclerView.findViewHolderForAdapterPosition(pos).itemView.findViewById(R.id.jobname_tv);
 
                 mJobName.setTextIsSelectable(true);
@@ -165,6 +214,7 @@ public class AtuCertificateFragment extends BaseContainerFragment{
 
                 mJobName.setSelected(true);
 
+                mJobNameText = mJobName.getText().toString();
         }
         }));
 
@@ -192,7 +242,17 @@ public class AtuCertificateFragment extends BaseContainerFragment{
 
         };
 
-        mRecyclerView.setAdapter(mCertificateAdapter);
+       statesRecyclerViewAdapter = new StatesRecyclerViewAdapter(mCertificateAdapter,
+                loadingView, emptyView, errorView);
+        mRecyclerView.setAdapter(statesRecyclerViewAdapter);
+
+        if(searchString==null){
+            statesRecyclerViewAdapter.setState(StatesRecyclerViewAdapter.STATE_EMPTY);
+
+        } else {
+            statesRecyclerViewAdapter.setState(StatesRecyclerViewAdapter.STATE_LOADING);
+            statesRecyclerViewAdapter.setState(StatesRecyclerViewAdapter.STATE_NORMAL);
+        }
     }
 
     @Override
@@ -215,6 +275,10 @@ public class AtuCertificateFragment extends BaseContainerFragment{
 
         mSearchView.setQueryHint("Search Jobs");
 
+        mSearchView.setIconified(true);
+
+        mSearchView.clearFocus();
+
         super.onCreateOptionsMenu(menu, inflater);
 
     }
@@ -235,17 +299,18 @@ public class AtuCertificateFragment extends BaseContainerFragment{
                             Bundle args = new Bundle();
                             args.putString("query_string", searchString);
                             newFragment.setArguments(args);
-
                             transaction.replace(R.id.fragment_atu_certificate, newFragment);
-                            transaction.addToBackStack(null);
+//                            transaction.addToBackStack(null);
                             transaction.commit();
                         }
-                        return false;
+                        return true;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        return false;
+                        searchString = newText;
+                        Toast.makeText(getContext(), searchString, Toast.LENGTH_SHORT).show();
+                        return true;
                     }
                 });
 

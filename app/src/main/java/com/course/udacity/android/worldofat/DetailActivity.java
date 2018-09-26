@@ -30,8 +30,6 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-//        Toolbar toolbar = findViewById(R.id.jobsearch_toolbar);
-//        setActionBar(toolbar);
 
         mTabLayout = findViewById(R.id.detail_view_tablayout);
         mTabLayout.addTab(mTabLayout.newTab().setText("ATU"));

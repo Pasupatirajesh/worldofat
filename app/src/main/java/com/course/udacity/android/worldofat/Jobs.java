@@ -1,22 +1,27 @@
 package com.course.udacity.android.worldofat;
 
+import com.infoedge.jrandomizer.annotations.CustomGenerator;
+import com.infoedge.jrandomizer.annotations.Number;
+
 import org.parceler.Parcel;
+
+
 
 @Parcel
 public class Jobs {
 
+    @JobName
+    @CustomGenerator(generator = CustomJobObjectGenerator.class)
     String jobName;
+    @Number(min = 10, max = 20, decimals = 0)
     int jobId;
+    @JobLoc
+    @CustomGenerator(generator = CustomJobLocationObjectGenerator.class)
     String location;
 
-    public Jobs(){
 
-    }
+    public Jobs() {
 
-    public Jobs(String jobName, int id, String loc) {
-        this.jobName = jobName;
-        this.jobId = id;
-        this.location = loc;
     }
 
     public String getJobName() {
@@ -42,6 +47,8 @@ public class Jobs {
     public void setLocation(String location) {
         this.location = location;
     }
+
+
 }
 
 
