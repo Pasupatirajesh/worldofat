@@ -10,25 +10,34 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.SearchView;
 
 import com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuPersonnelFragment;
-import com.course.udacity.android.worldofat.Fragment.BaseContainerFragment;
 
 public class DetailActivity extends AppCompatActivity implements AtuFragment.OnFragmentInteractionListener, AtuPersonnelFragment.OnFragmentInteractionListener,
         AtuCertificateFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener {
 
     private TabLayout mTabLayout;
     private static final String TAG = DetailActivity.class.getSimpleName();
-    private SearchView searchView;
-    private static BaseContainerFragment sBaseContainerFragment = new BaseContainerFragment();
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
 
         mTabLayout = findViewById(R.id.detail_view_tablayout);
@@ -56,6 +65,7 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
             }
         });
+
     }
 
 
@@ -95,6 +105,7 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
             return numOfTabs;
         }
     }
+
 
 
 

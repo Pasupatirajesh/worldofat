@@ -1,4 +1,4 @@
 package com.course.udacity.android.worldofat;
 
-class CustomJobObjectLowerCaseGenerator {
+public class JobSearchFetcher {
 }

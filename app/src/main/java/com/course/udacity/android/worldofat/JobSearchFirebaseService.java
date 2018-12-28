@@ -1,4 +1,4 @@
 package com.course.udacity.android.worldofat;
 
-public class RecyclerTouchListener {
+public class JobSearchFirebaseService {
 }

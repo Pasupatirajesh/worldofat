@@ -13,6 +13,10 @@ public class Jobs {
     @JobName
     @CustomGenerator(generator = CustomJobObjectGenerator.class)
     String jobName;
+
+    @CustomGenerator(generator = CustomJobObjectLowerCaseGenerator.class)
+    @JobName
+    String jobNameLowerCase;
     @Number(min = 10, max = 20, decimals = 0)
     int jobId;
     @JobLoc
@@ -48,7 +52,13 @@ public class Jobs {
         this.location = location;
     }
 
+    public String getJobNameLowerCase() {
+        return jobNameLowerCase;
+    }
 
+    public void setJobNameLowerCase(String jobNameLowerCase) {
+        this.jobNameLowerCase = jobNameLowerCase;
+    }
 }
 
 

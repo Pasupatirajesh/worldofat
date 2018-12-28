@@ -7,12 +7,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.course.udacity.android.worldofat.Fragment.PictureFragment;
@@ -39,6 +46,10 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
     private static int page=0;
     private Handler mHandler;
     private ImageButton pipBtn;
+    private TextInputLayout mTtileText;
+
+    private DrawerLayout drawerLayout;
+    private RelativeLayout mRelativeLayout;
 
     Runnable mRunnable = new Runnable() {
         @Override
@@ -63,6 +74,11 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
         setContentView(R.layout.activity_intro);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_pic_frag);
 
         mHandler = new Handler();
@@ -140,6 +156,26 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
                 startActivity(myActivity);
                 }
         });
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        configureNavigationDrawer();
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+
+
+
     }
 
     @Override
@@ -152,6 +188,28 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
         }else{
             pipBtn.setVisibility(View.GONE);
         }
+    }
+
+    private void configureNavigationDrawer() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navView = (NavigationView) findViewById(R.id.navigation);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                menuItem.setChecked(true);
+                int itemId = menuItem.getItemId();
+                if(itemId == R.id.nav_gallery){
+                    Toast.makeText(IntroActivity.this, "Hi From Gallery", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawers();
+
+                } else if(itemId == R.id.camera){
+                    Toast.makeText(IntroActivity.this, "Hi from Camera", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawers();
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -181,9 +239,12 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+       switch (id) {
+           case android.R.id.home:
+
+               drawerLayout.openDrawer(GravityCompat.START);
+               return true;
+       }
 
         return super.onOptionsItemSelected(item);
     }
