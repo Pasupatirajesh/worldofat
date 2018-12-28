@@ -1,4 +1,4 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Model;
 
 
 import com.infoedge.jrandomizer.adapters.StringToStringAdapter;

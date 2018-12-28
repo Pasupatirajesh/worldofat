@@ -1,10 +1,11 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Misc;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.course.udacity.android.worldofat.Databases.AtuPersonnelContract;
 import com.course.udacity.android.worldofat.Databases.AtuPersonnelHelper;
 import com.course.udacity.android.worldofat.Model.PersonnelModel;
+import com.course.udacity.android.worldofat.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -88,23 +90,30 @@ public class PersonnelRecyclerView extends RecyclerView.Adapter<PersonnelRecycle
     @Override
     public void onBindViewHolder(PersonnelItemHolder holder, int position) {
 
-
-
         mCursor.moveToFirst();
 
                 mCursor.moveToPosition(position);
-                    holder.mNameTextView.setText("XYZ");
-                    holder.mEmailTextView.setText("xyz@example.com");
+                    holder.mNameTextView.setText(mCursor.getString(
+                            mCursor.getColumnIndex(AtuPersonnelContract.AtuPersonnelEntry.PERSON_NAME)));
 
-                    Picasso.get().load(R.mipmap.coll_logo).into(holder.mImageView);
+                    holder.mEmailTextView.setText(mCursor.getString(
+                            mCursor.getColumnIndex(AtuPersonnelContract.AtuPersonnelEntry.PERSON_EMAIL)));
 
+                    Uri uri;
+
+                    if(position > 7) {
+                        uri = Uri.parse(imageString[position]);
+                        Picasso.get().load("file:///android_asset/"+ uri).into(holder.mImageView);
+                    } else {
+                        Picasso.get().load(R.mipmap.coll_logo).into(holder.mImageView);
+                    }
 
                     setAnimation(holder.itemView, position);
     }
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 7;
     }
 
     private void setAnimation(View viewToAnimate, int pos){

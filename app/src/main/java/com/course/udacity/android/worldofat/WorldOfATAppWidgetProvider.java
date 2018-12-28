@@ -1,3 +1,5 @@
+package com.course.udacity.android.worldofat;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -6,7 +8,6 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.course.udacity.android.worldofat.Activity.IntroActivity;
-import com.course.udacity.android.worldofat.R;
 
 public class WorldOfATAppWidgetProvider extends AppWidgetProvider {
 
@@ -15,7 +16,7 @@ public class WorldOfATAppWidgetProvider extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         final int N = appWidgetIds.length;
 
-        for (int i =0; i<N; i++){
+        for (int i =0; i<N; i++) {
             int appWidgetId = appWidgetIds[i];
 
             //Create an Intent to launch the IntoActivity of the Application
@@ -29,6 +30,18 @@ public class WorldOfATAppWidgetProvider extends AppWidgetProvider {
 
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+
+        }
+    }
+
+
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        final int N = appWidgetIds.length;
+        for (int i=0; i<N; i++){
+
         }
     }
 }

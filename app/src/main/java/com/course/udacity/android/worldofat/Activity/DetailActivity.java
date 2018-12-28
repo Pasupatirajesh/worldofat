@@ -1,4 +1,4 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Activity;
 
 import android.net.Uri;
 import android.os.Build;
@@ -11,27 +11,41 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.course.udacity.android.worldofat.Fragment.BlankFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuPersonnelFragment;
+import com.course.udacity.android.worldofat.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 public class DetailActivity extends AppCompatActivity implements AtuFragment.OnFragmentInteractionListener, AtuPersonnelFragment.OnFragmentInteractionListener,
         AtuCertificateFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener {
 
     private TabLayout mTabLayout;
+    private static final String AD_MOB_APPID = "ca-app-pub-3940256099942544~3347511713";
+
+    private AdView adView;
     private static final String TAG = DetailActivity.class.getSimpleName();
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        MobileAds.initialize(this,AD_MOB_APPID );
+
+        adView =(AdView)findViewById(R.id.mobile_ad);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        adView.loadAd(adRequest);
+
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-
-
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;

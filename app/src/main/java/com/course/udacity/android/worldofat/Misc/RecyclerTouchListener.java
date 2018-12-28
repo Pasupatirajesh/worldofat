@@ -1,4 +1,4 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Misc;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

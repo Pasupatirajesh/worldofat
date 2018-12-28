@@ -22,10 +22,10 @@ public class PersonnelModel {
         this.mContext = context;
     }
 
-    private String[] name = new String[] {"xyz", "ABC", "LIVE", "NOT LIVE",
-    "MNOP", "PORS", "RADISH"};
+    private String[] name = new String[] {"Glenn Hedman", "Kathy Hooyenga", "Pat Politano", "Fani Lee",
+    "Kathy Waldera", "Sathya Subramanian", "Brenda Sposato"};
 
-    private String[] email = new String[]{"xyz@example.com", "abc@example.com", "pqrs@example.com",
+    private String[] email = new String[]{"ghedman@uic.edu", "hooyenga@uic.edu", "politano@uic.edu",
     "lobster@example.com", "dai@example.com", "kova@example.com", "radish@example.com"};
     private String[] image = new String[]{};
 

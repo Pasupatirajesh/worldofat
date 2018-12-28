@@ -83,6 +83,7 @@ public class AtuFragment extends BaseContainerFragment {
         }
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();

@@ -1,4 +1,4 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Activity;
 
 import android.app.PictureInPictureParams;
 import android.content.Intent;
@@ -33,12 +33,17 @@ import android.widget.Toast;
 import com.course.udacity.android.worldofat.Fragment.PictureFragment;
 import com.course.udacity.android.worldofat.Model.GettyImageModel;
 import com.course.udacity.android.worldofat.Networking.Controller;
+import com.course.udacity.android.worldofat.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
 public class IntroActivity extends AppCompatActivity implements PictureFragment.OnFragmentInteractionListener {
 
     private static final String TAG = IntroActivity.class.getSimpleName() ;
+    private static final String AD_MOB_APPID = "ca-app-pub-3940256099942544~3347511713";
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
     private static String uri="";
@@ -47,6 +52,7 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
     private Handler mHandler;
     private ImageButton pipBtn;
     private TextInputLayout mTtileText;
+    private  AdView adView;
 
     private DrawerLayout drawerLayout;
     private RelativeLayout mRelativeLayout;
@@ -72,6 +78,10 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        MobileAds.initialize(this, AD_MOB_APPID);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -147,6 +157,22 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
             }
         });
 
+        // Displaying Google's ad Mob ads
+
+//        MobileAds.initialize(this, AD_MOB_APPID);
+
+        adView =(AdView)this.findViewById(R.id.mobile_ad);
+
+        boolean isTestDevice;
+
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        isTestDevice = adRequest.isTestDevice(this);
+        Toast.makeText(this, isTestDevice+"", Toast.LENGTH_LONG).show();
+
+        adView.loadAd(adRequest);
+
+
 
         Button mDetailButton = findViewById(R.id.detail_view_button);
         mDetailButton.setOnClickListener(new View.OnClickListener() {
@@ -172,10 +198,6 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
                 R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
-
-
-
     }
 
     @Override

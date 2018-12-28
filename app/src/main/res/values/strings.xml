@@ -10,4 +10,10 @@
     <string name="action_search">search</string>
     <string name="floating_menu">Floating Menu</string>
     <string name="save_in_keep">Save in Google Keep</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="send_to">Share Resume</string>
+    <string name="title_activity_file_sharing">FileSharingActivity</string>
+    <string name="no_jobs_feedback">No Job Postings available now</string>
+    <string name="app_title">World of AT</string>
 </resources>

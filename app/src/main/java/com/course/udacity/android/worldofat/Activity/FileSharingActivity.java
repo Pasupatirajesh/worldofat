@@ -1,7 +1,9 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.course.udacity.android.worldofat.R;
 
 import java.io.File;
 

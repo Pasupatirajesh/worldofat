@@ -1,4 +1,4 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.course.udacity.android.worldofat.Fragment.BaseContainerFragment;
+import com.course.udacity.android.worldofat.R;
 
 
 /**

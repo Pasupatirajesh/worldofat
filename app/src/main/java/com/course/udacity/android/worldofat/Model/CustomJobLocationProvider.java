@@ -1,4 +1,4 @@
-package com.course.udacity.android.worldofat;
+package com.course.udacity.android.worldofat.Model;
 
 public class CustomJobLocationProvider extends com.infoedge.jrandomizer.providers.Provider<String[]>{
 

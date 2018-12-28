@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.course.udacity.android.worldofat.PersonnelRecyclerView;
+import com.course.udacity.android.worldofat.Misc.PersonnelRecyclerView;
 import com.course.udacity.android.worldofat.R;
 
 import java.io.IOException;
