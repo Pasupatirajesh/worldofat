@@ -3,22 +3,25 @@ package com.course.udacity.android.worldofat.Activity;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
-import com.course.udacity.android.worldofat.Fragment.BlankFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuPersonnelFragment;
+import com.course.udacity.android.worldofat.Fragment.BlankFragment;
 import com.course.udacity.android.worldofat.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 public class DetailActivity extends AppCompatActivity implements AtuFragment.OnFragmentInteractionListener, AtuPersonnelFragment.OnFragmentInteractionListener,
         AtuCertificateFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener {
@@ -42,12 +45,12 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
         adView.loadAd(adRequest);
 
 
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
 
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -90,7 +93,7 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
     }
 
-    public class PagerAdapter extends FragmentStatePagerAdapter{
+    public class PagerAdapter extends FragmentStatePagerAdapter {
 
         int numOfTabs;
 

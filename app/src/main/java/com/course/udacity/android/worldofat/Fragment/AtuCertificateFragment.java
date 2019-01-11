@@ -2,17 +2,9 @@ package com.course.udacity.android.worldofat.Fragment;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,16 +13,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.course.udacity.android.worldofat.Misc.ActionModeImplementation;
+import com.course.udacity.android.worldofat.CertificateViewHolder;
+import com.course.udacity.android.worldofat.FirebaseWorkManager;
+import com.course.udacity.android.worldofat.FirebaseWorker;
 import com.course.udacity.android.worldofat.Model.Jobs;
 import com.course.udacity.android.worldofat.R;
-import com.course.udacity.android.worldofat.Misc.RecyclerTouchListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +33,16 @@ import com.infoedge.android.arandomizer.DroidGenerator;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.course.udacity.android.worldofat.R.id.jobname_tv;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Data;
+import androidx.work.WorkInfo;
+
 
 //import com.course.udacity.android.worldofat.CertificateAdapter;
 
@@ -55,6 +56,8 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
 
     private static FirebaseRecyclerAdapter mCertificateAdapter;
 
+    private static  FirebaseWorker mFirebaseWorker;
+
     private static String searchString;
 
     public static final String FIREBASE_PRIMARY_CHILD_NODE = "jobsearch";
@@ -64,6 +67,10 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
     private static ProgressBar sProgressBar;
 
     private static TextView mHintsTexView;
+
+    private String outString="";
+
+    private  FirebaseWorkManager mManager;
 
     private JobApplyWindowFragment.OnApplyCompletedListener mOnApplyCompletedListener;
 
@@ -92,6 +99,29 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mManager = new FirebaseWorkManager();
+        mManager.getOutputWorkInfo().observe(getActivity(), workInfos -> {
+
+            if(workInfos == null || workInfos.isEmpty()){
+                return;
+            }
+            WorkInfo workInfo = workInfos.get(0);
+
+//            Log.d(TAG, workInfo.getOutputData().toString()+"");
+
+            Data output = workInfo.getOutputData();
+
+
+            outString= output.getString(FirebaseWorker.WORK_PARAM_KEY);
+
+            mManager.setOutputString(outString);
+
+            Log.d(TAG, mManager.getOutputString()+"");
+
+
+        });
+
         setHasOptionsMenu(true);
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -139,38 +169,18 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
         mRecyclerView = view.findViewById(R.id.certificate_rv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        registerForContextMenu(mRecyclerView);
+        Query iQ = FirebaseWorker.deserializeFromJson(outString);
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(
-                getContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
+        Log.d("QUERY", iQ+"");
 
-            @Override
-            public void onClick(View view, int position) {
-                Log.i(TAG, "Click from onClick");
-            }
 
-            @Override
-            public void onLongClick(final View view, final int pos) {
-
-                ActionModeImplementation actionModeImplementation = new ActionModeImplementation(getContext());
-                Objects.requireNonNull(getActivity()).startActionMode(actionModeImplementation);
-
-                actionModeImplementation.setDataCopiedListener(new ActionModeImplementation.dataCopiedListener() {
-                    @Override
-                    public String onDataCopied() {
-                        TextView jobNameText = Objects.requireNonNull(mRecyclerView.findViewHolderForAdapterPosition(pos)).itemView.findViewById(R.id.jobname_tv);
-                        return jobNameText.getText().toString();
-                    }
-                });
-
-                }
-
-                }));
 
         Query iquery = FirebaseDatabase.getInstance().getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE)
                 .orderByChild("jobName").equalTo(searchString).limitToFirst(7);
 
-        if(iquery !=null) {
+//        if( outString!=null) {
+
+//           mManager.getOutputString();
 
             FirebaseRecyclerOptions<Jobs> options = new FirebaseRecyclerOptions.Builder<Jobs>()
                     .setQuery(iquery, Jobs.class).build();
@@ -182,8 +192,8 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
                 sProgressBar.setVisibility(ProgressBar.VISIBLE);
             }
 
-            mCertificateAdapter = new FirebaseRecyclerAdapter<Jobs, CertificateViewHolder>(options) {
 
+            mCertificateAdapter = new FirebaseRecyclerAdapter<Jobs, CertificateViewHolder>(options) {
                 @NonNull
                 @Override
                 public CertificateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -193,9 +203,10 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
                 }
 
                 @Override
-                protected void onBindViewHolder(@NonNull CertificateViewHolder holder, int position, @NonNull Jobs model) {
-                    holder.mJobName.setText(model.getJobName());
-                    holder.mJobLoction.setText(model.getLocation());
+                protected void onBindViewHolder(@NonNull CertificateViewHolder viewHolder, int i, @NonNull Jobs model) {
+                    viewHolder.mJobName.setText(model.getJobName());
+                    viewHolder.mJobLoction.setText(model.getLocation());
+
                 }
 
                 @Override
@@ -205,11 +216,57 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
                     mHintsTexView.setVisibility(TextView.INVISIBLE);
                 }
             };
-        } else {
-            mHintsTexView.setText(R.string.no_jobs_feedback);
-        }
+//        } else {
+//            mHintsTexView.setText(R.string.no_jobs_feedback);
+//        }
+
 
         mRecyclerView.setAdapter(mCertificateAdapter);
+
+//        JobSearchUtilities.scheduleJobSearchService(getContext());
+
+//        registerForContextMenu(mRecyclerView);
+//
+//        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(
+//                getContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
+//
+//            @Override
+//            public void onClick(View view, int position) {
+//                Log.i(TAG, "Click from onClick");
+//            }
+//
+//            @Override
+//            public void onLongClick(final View view, final int pos) {
+//
+//                ActionModeImplementation actionModeImplementation = new ActionModeImplementation(getContext());
+//                Objects.requireNonNull(getActivity()).startActionMode(actionModeImplementation);
+//
+//                actionModeImplementation.setDataCopiedListener(new ActionModeImplementation.dataCopiedListener() {
+//                    @Override
+//                    public String onDataCopied() {
+//                        TextView jobNameText = Objects.requireNonNull(mRecyclerView.findViewHolderForAdapterPosition(pos)).itemView.findViewById(R.id.jobname_tv);
+//                        return jobNameText.getText().toString();
+//                    }
+//                });
+//
+//                }
+//
+//                }));
+//
+
+//            if (searchString == null) {
+//                mHintsTexView.setVisibility(TextView.VISIBLE);
+//            }
+//            if (searchString != null) {
+//                sProgressBar.setVisibility(ProgressBar.VISIBLE);
+//            }
+//
+//
+//        } else {
+//            mHintsTexView.setText(R.string.no_jobs_feedback);
+//        }
+
+//        mRecyclerView.setAdapter(mCertificateAdapter);
     }
 
     @Override
@@ -242,7 +299,14 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
                         @Override
                         public boolean onQueryTextSubmit(String query) {
                             searchString = query;
-                            Toast.makeText(getContext(), searchString, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getContext(), searchString, Toast.LENGTH_LONG).show();
+
+                            Data inputData =new Data.Builder().putString(FirebaseWorker.WORK_PARAM_KEY, searchString).build();
+                            mManager.setInputData(inputData);
+
+                            mManager.startJobSearch();
+
+
                             assert getFragmentManager() != null;
                             final FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             final Fragment newFragment = new AtuCertificateFragment();
@@ -269,6 +333,7 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
                     break;
         }
         mSearchView.setFocusable(false);
+
 
         return super.onOptionsItemSelected(item);
 
@@ -312,34 +377,7 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
 
     }
 
-    public class CertificateViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mJobName;
-        public TextView mJobLoction;
-        public Button mApplyButton;
-
-
-        public CertificateViewHolder(View itemView) {
-            super(itemView);
-            mJobName = itemView.findViewById(jobname_tv);
-            mJobLoction = itemView.findViewById(R.id.jobloc_tv);
-            mApplyButton = itemView.findViewById(R.id.apply_button);
-
-            mApplyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-                    emailIntent.setType("plain/text");
-
-                    startActivity(Intent.createChooser(emailIntent, getResources().getText(R.string.send_to)));
-
-                }
-            });
-
-        }
-    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

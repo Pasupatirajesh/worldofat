@@ -2,7 +2,6 @@ package com.course.udacity.android.worldofat.Networking;
 
 import android.content.Context;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +10,7 @@ import com.course.udacity.android.worldofat.Model.GettyImageModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

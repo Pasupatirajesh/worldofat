@@ -1,9 +1,9 @@
 package com.course.udacity.android.worldofat.Fragment;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-
 import com.course.udacity.android.worldofat.R;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 
 public class BaseContainerFragment extends Fragment {

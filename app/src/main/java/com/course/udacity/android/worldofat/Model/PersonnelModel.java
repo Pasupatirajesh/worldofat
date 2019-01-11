@@ -2,9 +2,10 @@ package com.course.udacity.android.worldofat.Model;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.io.IOException;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * Created by SSubra27 on 4/3/18.

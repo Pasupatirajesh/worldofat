@@ -1,13 +1,14 @@
 package com.course.udacity.android.worldofat.Activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.course.udacity.android.worldofat.R;
 
 import java.io.File;
 
-public class FileSharingActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class FileSharingActivity extends AppCompatActivity {
 
     // The path to the root of this app's storage
     private File  mPrivateRootDir;

@@ -7,9 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +23,10 @@ import com.course.udacity.android.worldofat.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PersonnelRecyclerView extends RecyclerView.Adapter<PersonnelRecyclerView.PersonnelItemHolder> {
 

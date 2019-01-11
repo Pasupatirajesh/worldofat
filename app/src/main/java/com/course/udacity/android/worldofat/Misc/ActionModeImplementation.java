@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +16,8 @@ import com.course.udacity.android.worldofat.R;
 
 import java.util.List;
 import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ActionModeImplementation implements ActionMode.Callback {
 
