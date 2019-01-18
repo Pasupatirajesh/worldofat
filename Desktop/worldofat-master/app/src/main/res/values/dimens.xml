@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="toolbar_horizontal_padding">12dp</dimen>
+    <dimen name="first_keyline">4dp</dimen>
+    <dimen name="abc_action_bar_default_height">25dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
+
+</resources>
