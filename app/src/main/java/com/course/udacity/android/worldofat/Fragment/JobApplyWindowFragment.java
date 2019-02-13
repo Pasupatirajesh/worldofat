@@ -1,5 +1,6 @@
 package com.course.udacity.android.worldofat.Fragment;
 
+<<<<<<< HEAD
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,10 +10,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+=======
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+>>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+<<<<<<< HEAD
 import android.widget.Toast;
 
 import com.course.udacity.android.worldofat.R;
@@ -32,11 +40,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.concurrent.Executor;
+=======
+
+import com.course.udacity.android.worldofat.R;
+>>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+<<<<<<< HEAD
 import static com.course.udacity.android.worldofat.App.getContext;
 
 public class JobApplyWindowFragment extends DialogFragment {
@@ -45,6 +58,13 @@ public class JobApplyWindowFragment extends DialogFragment {
     private int RC_SIGN_IN= 1;
     public OnApplyCompletedListener onApplyCompletedListener;
     private static final String TAG = JobApplyWindowFragment.class.getSimpleName();
+=======
+public class JobApplyWindowFragment extends DialogFragment {
+
+    private TextView mJobNameDf;
+
+    private TextView mJobDesDf;
+>>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 
     public JobApplyWindowFragment() {
 
@@ -52,7 +72,11 @@ public class JobApplyWindowFragment extends DialogFragment {
 
     public interface OnApplyCompletedListener{
 
+<<<<<<< HEAD
         Activity onApplyCompleted();
+=======
+        void onApplyCompleted(String inputString);
+>>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 
     }
 
@@ -67,7 +91,14 @@ public class JobApplyWindowFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+<<<<<<< HEAD
         return inflater.inflate(R.layout.dialog_frag_apply_window, container, false);
+=======
+
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        return inflater.inflate(R.layout.dialog_frag_apply_window, container);
+>>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
     }
 
     @NonNull
@@ -75,6 +106,7 @@ public class JobApplyWindowFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
 
+<<<<<<< HEAD
         AlertDialog.Builder alrtdb = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -164,4 +196,43 @@ public class JobApplyWindowFragment extends DialogFragment {
     }
 
 
+=======
+        AlertDialog.Builder alrtdb = new AlertDialog.Builder(getContext());
+        String title = getArguments().getString("title");
+        alrtdb.setTitle(title);
+        alrtdb.setMessage("Apply to this job by emailing your resume");
+        alrtdb.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                OnApplyCompletedListener listener = (OnApplyCompletedListener) getTargetFragment();
+                listener.onApplyCompleted("hi");
+                dismiss();
+
+            }
+        });
+
+        alrtdb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(dialog !=null) {
+                    dialog.dismiss();
+                }
+            }
+
+
+
+        });
+
+        return alrtdb.create();
+    }
+
+    public void sendBackResult(){
+
+        OnApplyCompletedListener listener = (OnApplyCompletedListener) getTargetFragment();
+        listener.onApplyCompleted("hi");
+        dismiss();
+
+
+    }
+>>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 }

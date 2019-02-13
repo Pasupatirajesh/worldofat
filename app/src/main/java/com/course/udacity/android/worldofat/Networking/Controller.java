@@ -50,7 +50,11 @@ public class Controller  {
 
         final GettyImageAPI gettyImageAPI =  retfit.create(GettyImageAPI.class);
 
+<<<<<<< HEAD
         Call<GettyImageModel> call = gettyImageAPI.loadImages("YOUR API KEY HERE");
+=======
+        Call<GettyImageModel> call = gettyImageAPI.loadImages("mek7med9e8ju3wsn2rzg77mh");
+>>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 
         call.enqueue(new Callback<GettyImageModel>() {
             @Override
