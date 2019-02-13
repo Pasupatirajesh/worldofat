@@ -77,8 +77,6 @@ public class PersonnelRecyclerView extends RecyclerView.Adapter<PersonnelRecycle
                     null,
                     null,
                     null);
-
-
     }
 
     @Override
@@ -100,14 +98,11 @@ public class PersonnelRecyclerView extends RecyclerView.Adapter<PersonnelRecycle
                     holder.mEmailTextView.setText(mCursor.getString(
                             mCursor.getColumnIndex(AtuPersonnelContract.AtuPersonnelEntry.PERSON_EMAIL)));
 
-                    Uri uri;
 
-                    if(position > 7) {
-                        uri = Uri.parse(imageString[position]);
-                        Picasso.get().load("file:///android_asset/"+ uri).into(holder.mImageView);
-                    } else {
-                        Picasso.get().load(R.mipmap.coll_logo).into(holder.mImageView);
-                    }
+
+
+                    Picasso.get().load(R.mipmap.coll_logo).into(holder.mImageView);
+
 
                     setAnimation(holder.itemView, position);
     }

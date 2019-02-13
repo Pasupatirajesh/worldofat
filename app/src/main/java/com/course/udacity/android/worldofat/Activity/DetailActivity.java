@@ -1,18 +1,36 @@
 package com.course.udacity.android.worldofat.Activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment;
+import com.course.udacity.android.worldofat.Fragment.AtuJobSearchFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuFragment;
 import com.course.udacity.android.worldofat.Fragment.AtuPersonnelFragment;
 import com.course.udacity.android.worldofat.Fragment.BlankFragment;
+import com.course.udacity.android.worldofat.Fragment.JobApplyWindowFragment;
 import com.course.udacity.android.worldofat.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -23,28 +41,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import static com.course.udacity.android.worldofat.App.getContext;
+
 public class DetailActivity extends AppCompatActivity implements AtuFragment.OnFragmentInteractionListener, AtuPersonnelFragment.OnFragmentInteractionListener,
-        AtuCertificateFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener {
+        AtuJobSearchFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener, JobApplyWindowFragment.OnApplyCompletedListener {
 
     private TabLayout mTabLayout;
-    private static final String AD_MOB_APPID = "ca-app-pub-3940256099942544~3347511713";
-
+    DetailActivity detailActivity;
     private AdView adView;
+
     private static final String TAG = DetailActivity.class.getSimpleName();
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        MobileAds.initialize(this,AD_MOB_APPID );
-
-        adView =(AdView)findViewById(R.id.mobile_ad);
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        adView.loadAd(adRequest);
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,9 +69,9 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
 
         mTabLayout = findViewById(R.id.detail_view_tablayout);
-        mTabLayout.addTab(mTabLayout.newTab().setText("ATU"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("ATU PERSONNEL"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("ATU CERTIFICATE"));
+        mTabLayout.addTab(mTabLayout.newTab().setText(getString(com.course.udacity.android.worldofat.R.string.atu_name)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(getString(com.course.udacity.android.worldofat.R.string.atu_personnel_string)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(getString(com.course.udacity.android.worldofat.R.string.atu_job_search)));
 
         final ViewPager viewPager = findViewById(R.id.detailView_view_pager);
         final PagerAdapter mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
@@ -82,15 +93,17 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
             }
         });
-
     }
-
-
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public Activity onApplyCompleted() {
+
+        return this;
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -110,7 +123,7 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
 
                 case 1: return new AtuPersonnelFragment();
 
-                case 2: return new AtuCertificateFragment();
+                case 2: return new AtuJobSearchFragment();
 
                 default:
                         return null;
@@ -121,8 +134,8 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
         public int getCount() {
             return numOfTabs;
         }
-    }
 
+    }
 
 
 

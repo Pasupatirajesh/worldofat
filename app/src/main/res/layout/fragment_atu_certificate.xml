@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:id="@+id/fragment_atu_certificate"
-    tools:context="com.course.udacity.android.worldofat.Fragment.AtuCertificateFragment">
+    tools:context="com.course.udacity.android.worldofat.Fragment.AtuJobSearchFragment">
 
 
     <!-- TODO: Update blank fragment layout -->
@@ -22,7 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Search for AT Jobs"/>
+        android:contentDescription="@string/content_description_jobs"
+        android:text="@string/search_for_at_jobs"/>
         <!--android:gravity="center_horizontal"-->
 
 

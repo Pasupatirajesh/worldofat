@@ -51,26 +51,4 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/mobile_ad"
-        android:layout_width="300dp"
-        android:layout_height="62dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.566"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolBar"
-        app:layout_constraintVertical_bias="1.0">
-
-    </com.google.android.gms.ads.AdView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

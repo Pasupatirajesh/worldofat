@@ -18,6 +18,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 
 /**
@@ -78,7 +80,6 @@ public class AtuPersonnelFragment extends BaseContainerFragment{
             try {
                 mPersonnelRecyclerView = new PersonnelRecyclerView(getContext());
 
-                //                mPersonnelRecyclerView.setItemAnimator(slideInUpAnimator);
             } catch (IOException e) {
                 e.printStackTrace();
             }
