@@ -9,21 +9,17 @@ buildscript {
     dependencies {
 
 
-<<<<<<< HEAD
+
         classpath 'com.android.tools.build:gradle:3.3.0'
-=======
-        classpath 'com.android.tools.build:gradle:3.2.1'
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
+
         
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:4.2.0'
-<<<<<<< HEAD
+
         classpath 'com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02'
 
-=======
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 
 
 

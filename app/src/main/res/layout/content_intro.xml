@@ -19,11 +19,6 @@
         android:text="@string/assistive_technology"
         android:textAlignment="center"
         android:textSize="24sp"
-<<<<<<< HEAD
-        android:accessibilityLiveRegion="polite"
-        android:contentDescription="@string/assistive_technology"
-=======
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,13 +35,7 @@
         android:layout_height="246dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-<<<<<<< HEAD
-        android:accessibilityLiveRegion="polite"
         android:text="@string/asstivie_technology_brief"
-        android:contentDescription="@string/asstivie_technology_brief"
-=======
-        android:text="@string/asstivie_technology_brief"
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
@@ -65,14 +54,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-<<<<<<< HEAD
-        android:text="@string/more_info"
-        android:accessibilityLiveRegion="assertive"
-        android:contentDescription="@string/more_info"
-=======
         android:text="More Info"
 
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
         app:layout_constraintBottom_toBottomOf="@+id/assist_tech_brief"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -93,10 +76,6 @@
         android:layout_marginTop="64dp"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
-<<<<<<< HEAD
-        android:contentDescription="@string/ad_banner"
-=======
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

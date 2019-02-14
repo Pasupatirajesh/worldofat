@@ -18,11 +18,10 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-<<<<<<< HEAD
+
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
-=======
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
+
 
 
 /**
@@ -83,10 +82,6 @@ public class AtuPersonnelFragment extends BaseContainerFragment{
             try {
                 mPersonnelRecyclerView = new PersonnelRecyclerView(getContext());
 
-<<<<<<< HEAD
-=======
-                //                mPersonnelRecyclerView.setItemAnimator(slideInUpAnimator);
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 
 android {
-<<<<<<< HEAD
+
     signingConfigs {
         config {
             keyAlias 'myKey'
@@ -11,8 +11,7 @@ android {
             storePassword 'Appama@351985'
         }
     }
-=======
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.course.udacity.android.worldofat"
@@ -34,18 +33,9 @@ android {
         }
 
     }
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
     buildTypes {
 
-//        debug {
-//            minifyEnabled true
-//            useProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -54,31 +44,19 @@ android {
     sourceSets {
         main {
             assets.srcDirs = ['src/main/assets', 'src/main/assets/pictures']
-            //        main.srcDirs = ['/src/main/java/isr-cities.dta']
         }
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
     repositories {
         maven {
             url 'https://dl.bintray.com/android-infoedge/maven/'
         }
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 }
 
 dependencies {
@@ -101,14 +79,14 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:4.3.1'
     implementation 'androidx.arch.core:core-runtime:2.0.1-alpha01'
     implementation 'androidx.arch.core:core-common:2.0.0'
-<<<<<<< HEAD
+
     //    implementation 'com.google.firebase:firebase-admin:5.11.0'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     //    implementation project(path: ':jrogen')
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
-=======
+
 //    implementation 'com.google.firebase:firebase-admin:5.11.0'
     annotationProcessor 'org.parceler:parceler:1.1.10'
     androidTestImplementation 'androidx.test:runner:1.1.1'
@@ -116,12 +94,12 @@ dependencies {
     //    implementation project(path: ':jrogen')
     implementation 'org.parceler:parceler-api:1.1.10'
     annotationProcessor 'org.parceler:parceler:1.1.10'
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
+
     implementation 'io.github.benas:random-beans:3.7.0'
     implementation 'com.infoedge:arandomizer:0.1-beta1'
     implementation 'com.rockerhieu:rv-adapter-states:1.2+'
     implementation 'com.google.firebase:firebase-ads:17.1.2'
-<<<<<<< HEAD
+
     //    implementation 'com.google.android.gms:play-services-ads:15.0.0'
     //    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -130,7 +108,7 @@ dependencies {
     implementation 'android.arch.work:work-runtime:1.0.0-beta01'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
-=======
+
 //    implementation 'com.google.android.gms:play-services-ads:15.0.0'
 //    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -140,7 +118,6 @@ dependencies {
 
 
 
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
 }
 
 apply plugin: 'com.google.gms.google-services'

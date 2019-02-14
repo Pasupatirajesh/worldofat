@@ -4,10 +4,9 @@
     <string name="assistive_technology"> Assistive Technology</string>
     <string name="asstivie_technology_brief">Assistive Technology (AT) is any piece of equipment or software or system that
     maximizes the functional independence of an individual with disabilities</string>
-<<<<<<< HEAD
+
     <string name="google_sign_in_key">AIzaSyC6pRVN5_liU6GuJ2j5giH00ttwraExCe8</string>
-=======
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -20,7 +19,7 @@
     <string name="title_activity_file_sharing">FileSharingActivity</string>
     <string name="no_jobs_feedback">No Job Postings available now</string>
     <string name="app_title">World of AT</string>
-<<<<<<< HEAD
+
     <string name="atu_name">ATU</string>
     <string name="atu_personnel_string">ATU PERSONNEL</string>
     <string name="atu_job_search">ATU JOB SEARCH</string>
@@ -32,6 +31,5 @@
     <string name="ad_banner">AD BANNER</string>
     <string name="search_for_at_jobs">Search for AT Jobs</string>
     <string name="content_description_jobs">Search for jobs such as Shop Assistant, Occupational Therapist Physical Therapist etc</string>
-=======
->>>>>>> 65d0c9f279f6d809b3a05a10e1964cb0fdec4586
+
 </resources>

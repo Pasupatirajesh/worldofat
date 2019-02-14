@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.rockerhieu:rv-adapter-1.2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-rv-adapter-1.2.aar/92d526f3ed5d3743f7d25ff9f1cf997f/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-rv-adapter-1.2.aar/92d526f3ed5d3743f7d25ff9f1cf997f/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rockerhieu/rv-adapter/1.2/e0ae2c72230b5850ac04bb85d6ed32c09d9b719a/rv-adapter-1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
