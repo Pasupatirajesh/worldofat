@@ -76,18 +76,6 @@ public class DetailActivity extends AppCompatActivity implements AtuFragment.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-
-//        MobileAds.initialize(this,AD_MOB_APPID );
-//
-//        adView =(AdView)findViewById(R.id.mobile_ad);
-//
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//
-//        adView.loadAd(adRequest);
-
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
