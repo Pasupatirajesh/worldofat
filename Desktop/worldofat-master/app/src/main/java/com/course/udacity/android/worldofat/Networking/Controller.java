@@ -50,13 +50,16 @@ public class Controller  {
 
         final GettyImageAPI gettyImageAPI =  retfit.create(GettyImageAPI.class);
 
-        Call<GettyImageModel> call = gettyImageAPI.loadImages("mek7med9e8ju3wsn2rzg77mh");
+
+        Call<GettyImageModel> call = gettyImageAPI.loadImages("YOUR API KEY HERE");
+
 
         call.enqueue(new Callback<GettyImageModel>() {
             @Override
             public void onResponse(@NonNull Call<GettyImageModel> call, @NonNull Response<GettyImageModel> response) {
 
                 gettyImageModel = response.body();
+                assert gettyImageModel != null;
                 Toast.makeText(mContext, gettyImageModel.getResultCount()+"",Toast.LENGTH_LONG).show();
                 assert gettyImageModel != null;
                 if(gettyImageModel.getResultCount()!=null) {

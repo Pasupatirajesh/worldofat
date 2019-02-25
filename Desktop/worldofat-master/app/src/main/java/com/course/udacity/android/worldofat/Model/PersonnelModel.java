@@ -23,10 +23,11 @@ public class PersonnelModel {
         this.mContext = context;
     }
 
-    private String[] name = new String[] {"Glenn Hedman", "Kathy Hooyenga", "Pat Politano", "Fani Lee",
-    "Kathy Waldera", "Sathya Subramanian", "Brenda Sposato"};
+    private String[] name = new String[] {"GH", "KH", "PP", "FL",
+    "KW", "SS", "BS"};
 
-    private String[] email = new String[]{"ghedman@uic.edu", "hooyenga@uic.edu", "politano@uic.edu",
+    private String[] email = new String[]{"gh@example.com", "ho@example.com", "po@example.com",
+
     "lobster@example.com", "dai@example.com", "kova@example.com", "radish@example.com"};
     private String[] image = new String[]{};
 
@@ -64,9 +65,3 @@ public class PersonnelModel {
 }
 
 
-//    public PersonnelModel(Context context, String[] name, String[] email, String[] image) throws IOException {
-//        this.mContext = context;
-//        this.mName = name;
-//        this.mEmail = email;
-//        this.mImage = image;
-//    }

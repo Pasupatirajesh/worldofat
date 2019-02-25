@@ -43,7 +43,10 @@ import androidx.viewpager.widget.ViewPager;
 public class IntroActivity extends AppCompatActivity implements PictureFragment.OnFragmentInteractionListener {
 
     private static final String TAG = IntroActivity.class.getSimpleName() ;
-    private static final String AD_MOB_APPID = "ca-app-pub-3940256099942544~3347511713";
+
+    private static final String AD_MOB_APPID = "YOUR AD ID";
+
+
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
     private static String uri="";
@@ -150,7 +153,9 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
                         ioe.printStackTrace();
                     }
                 }else{
-                    Toast.makeText(getApplicationContext(), "Not Supported",Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(), com.course.udacity.android.worldofat.R.string.pip_not_supported_msg,Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -218,19 +223,22 @@ public class IntroActivity extends AppCompatActivity implements PictureFragment.
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 menuItem.setChecked(true);
                 int itemId = menuItem.getItemId();
-                if(itemId == R.id.nav_gallery){
-                    Toast.makeText(IntroActivity.this, "Hi From Gallery", Toast.LENGTH_SHORT).show();
+                if (itemId == R.id.nav_gallery) {
+
+                    Toast.makeText(IntroActivity.this, com.course.udacity.android.worldofat.R.string.hi_from_gallery, Toast.LENGTH_SHORT).show();
                     drawerLayout.closeDrawers();
 
-                } else if(itemId == R.id.camera){
-                    Toast.makeText(IntroActivity.this, "Hi from Camera", Toast.LENGTH_SHORT).show();
+                } else if (itemId == R.id.camera) {
+                    Toast.makeText(IntroActivity.this, com.course.udacity.android.worldofat.R.string.hi_from_camera, Toast.LENGTH_SHORT).show();
                     drawerLayout.closeDrawers();
+
+
                 }
-
                 return true;
             }
         });
     }
+
 
     @Override
     protected void onResume(){

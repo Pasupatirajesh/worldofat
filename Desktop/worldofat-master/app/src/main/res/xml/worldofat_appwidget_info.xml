@@ -2,12 +2,12 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="40dp"
     android:minHeight="40dp"
-    android:updatePeriodMillis="86400000"
+    android:updatePeriodMillis="18000000"
     android:previewImage="@drawable/jetpack_logo"
     android:initialLayout="@layout/appwidget_layout"
-
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen">
+
 </appwidget-provider>
 
     <!--android:configure="com.course.udacity.android.worldofat.WorldOfATAppWodgetConfigure"-->

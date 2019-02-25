@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <manifest package="com.course.udacity.android.worldofat"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -59,14 +61,21 @@
             </intent-filter>
         </activity>
 
-        //creating an app widget by declaring a broadcastreceiver
+
         <receiver android:name=".WorldOfATAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/worldofat_appwidget_info"/>
+                       android:resource="@xml/worldofat_appwidget_info"/>
         </receiver>
+
+        <service android:name=".JobSearchFirebaseService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
 
     </application>
 

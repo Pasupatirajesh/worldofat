@@ -12,12 +12,12 @@
         android:id="@+id/retry_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Oops, couldn't load Firebase data"/>
+        android:text="@string/error_loading_firebase_data"/>
 
     <Button
         android:id="@+id/retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retry"/>
+        android:text="@string/retry"/>
 
 </LinearLayout>

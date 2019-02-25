@@ -19,6 +19,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,7 +82,6 @@ public class AtuPersonnelFragment extends BaseContainerFragment{
             try {
                 mPersonnelRecyclerView = new PersonnelRecyclerView(getContext());
 
-                //                mPersonnelRecyclerView.setItemAnimator(slideInUpAnimator);
             } catch (IOException e) {
                 e.printStackTrace();
             }

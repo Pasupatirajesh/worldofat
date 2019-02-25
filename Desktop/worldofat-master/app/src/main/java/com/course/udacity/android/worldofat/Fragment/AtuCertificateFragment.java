@@ -1,5 +1,6 @@
 package com.course.udacity.android.worldofat.Fragment;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.net.Uri;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.course.udacity.android.worldofat.CertificateViewHolder;
+import com.course.udacity.android.worldofat.FirebaseWorkManager;
+import com.course.udacity.android.worldofat.FirebaseWorker;
 import com.course.udacity.android.worldofat.Misc.ActionModeImplementation;
 import com.course.udacity.android.worldofat.Misc.RecyclerTouchListener;
 import com.course.udacity.android.worldofat.Model.Jobs;
@@ -41,11 +44,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.Data;
+import androidx.work.WorkInfo;
 
 
 //import com.course.udacity.android.worldofat.CertificateAdapter;
 
-public class AtuCertificateFragment extends BaseContainerFragment implements JobApplyWindowFragment.OnApplyCompletedListener{
+public class AtuCertificateFragment extends BaseContainerFragment{
 
     private static final String TAG = AtuCertificateFragment.class.getSimpleName() ;
 
@@ -54,6 +58,8 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
     private RecyclerView mRecyclerView;
 
     private static FirebaseRecyclerAdapter mCertificateAdapter;
+
+    private static  FirebaseWorker mFirebaseWorker;
 
     private static String searchString;
 
@@ -67,13 +73,7 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
 
     private String outString="";
 
-    private JobApplyWindowFragment.OnApplyCompletedListener mOnApplyCompletedListener;
-
-    @Override
-    public void onApplyCompleted(String inputString) {
-        Toast.makeText(getContext(), "Hi, " + inputString, Toast.LENGTH_SHORT).show();
-
-    }
+    private  FirebaseWorkManager mManager;
 
     public AtuCertificateFragment() {
         // Required empty public constructor
@@ -141,6 +141,10 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
         mRecyclerView = view.findViewById(R.id.certificate_rv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
+
+
+
         Query iquery = FirebaseDatabase.getInstance().getReference("wordlofat-35400").child(FIREBASE_PRIMARY_CHILD_NODE)
                 .orderByChild("jobName").equalTo(searchString).limitToFirst(7);
 
@@ -153,9 +157,7 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
             }
             if (searchString != null) {
                 sProgressBar.setVisibility(ProgressBar.VISIBLE);
-            }
 
-            if(iquery != null){
 
 
             mCertificateAdapter = new FirebaseRecyclerAdapter<Jobs, CertificateViewHolder>(options) {
@@ -186,6 +188,12 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
         }
 
 
+        mRecyclerView.setAdapter(mCertificateAdapter);
+
+//        JobSearchUtilities.scheduleJobSearchService(getContext());
+
+        registerForContextMenu(mRecyclerView);
+
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(
                 getContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
 
@@ -212,22 +220,6 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
 
                 }));
 
-
-            if (searchString == null) {
-                mHintsTexView.setVisibility(TextView.VISIBLE);
-            }
-            if (searchString != null) {
-                sProgressBar.setVisibility(ProgressBar.VISIBLE);
-            }
-
-
-//        } else {
-//            mHintsTexView.setText(R.string.no_jobs_feedback);
-//        }
-
-        registerForContextMenu(mRecyclerView);
-
-        mRecyclerView.setAdapter(mCertificateAdapter);
     }
 
     @Override
@@ -261,6 +253,8 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
                         public boolean onQueryTextSubmit(String query) {
                             searchString = query;
                             Toast.makeText(getContext(), searchString, Toast.LENGTH_LONG).show();
+
+
                             assert getFragmentManager() != null;
                             final FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             final Fragment newFragment = new AtuCertificateFragment();
@@ -330,6 +324,7 @@ public class AtuCertificateFragment extends BaseContainerFragment implements Job
         mCertificateAdapter.stopListening();
 
     }
+
 
 
 
