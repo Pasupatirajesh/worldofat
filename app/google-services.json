@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "401687567975",
+    "firebase_url": "https://worldofat-35400.firebaseio.com",
+    "project_id": "worldofat-35400",
+    "storage_bucket": "worldofat-35400.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401687567975:android:4f514e7cfefbd1f2",
+        "android_client_info": {
+          "package_name": "com.course.udacity.android.worldofat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401687567975-t42dhtkh2g5d4e08ssnlu9n8t4516853.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.course.udacity.android.worldofat",
+            "certificate_hash": "424242f217d26ae5b48bbee1ca8fa966152b85fc"
+          }
+        },
+        {
+          "client_id": "401687567975-q1ns2tdmu9smu1j9dvbestu1i5bss90c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvIj9AVQFHLKoHqGiWlUwOn6elSYPazJI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401687567975-q1ns2tdmu9smu1j9dvbestu1i5bss90c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

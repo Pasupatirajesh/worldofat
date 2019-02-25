@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<manifest package="com.course.udacity.android.worldofat"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_at_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+
+        <activity
+            android:name=".Activity.IntroActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.DetailActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".Activity.IntroActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH">
+                </action>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        <activity
+            android:name=".Activity.FileSharingActivity"
+            android:label="@string/title_activity_file_sharing">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.PICK"/>
+                <category
+                    android:name="android.intent.category.DEFAULT"/>
+                <category
+                    android:name="android.intent.category.OPENABLE"/>
+                <data android:mimeType="text/plain"/>
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+        </activity>
+
+
+        <receiver android:name=".WorldOfATAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/worldofat_appwidget_info"/>
+        </receiver>
+
+    </application>
+
+</manifest>

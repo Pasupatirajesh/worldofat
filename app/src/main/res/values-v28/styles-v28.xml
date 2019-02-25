@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+
+        <!--<item name="colorPrimary">@color/simple_yellow</item>-->
+        <!--<item name="actionBarStyle">@style/MyActionBar</item>-->
+        <!--<item name="android:navigationBarColor">@color/simple_yellow</item>-->
+
+
+    <!--</style>-->
+
+    <!--<style name="MyActionBar" parent="Widget.AppCompat.ActionBar">-->
+        <!--<item name="background">@color/simple_yellow</item>-->
+    <!--</style>-->
+
+    <!--<style name="NavigationBarColor" parent="Widget.MaterialComponents.BottomNavigationView.Colored">-->
+        <!--<item name="android:navigationBarColor">@color/simple_yellow</item>-->
+    <!--</style>-->
+
+
+</resources>
