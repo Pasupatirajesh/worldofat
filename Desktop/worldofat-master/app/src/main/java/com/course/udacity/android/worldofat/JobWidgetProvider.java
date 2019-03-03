@@ -15,16 +15,15 @@ import com.course.udacity.android.worldofat.Activity.DetailActivity;
  */
 public class JobWidgetProvider extends AppWidgetProvider {
 
+    // Widget Listview implementation based on code structure in https://github.com/Annin7y/BakingApp
+
+
     public static final String ACTION_VIEW_DETAILS = "viewdetails";
 
     public static final String EXTRA_ITEM = "extraitem";
 
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
 
-
-    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -45,7 +44,6 @@ public class JobWidgetProvider extends AppWidgetProvider {
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
 
-//            updateAppWidget(context, appWidgetManager, appWidgetId);
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);

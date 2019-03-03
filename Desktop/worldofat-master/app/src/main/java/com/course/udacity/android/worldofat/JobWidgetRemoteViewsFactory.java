@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -21,6 +22,7 @@ class JobWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     private Context mContext;
     private ArrayList<Jobs> mJobs;
 
+    // Widget RemoteViewsFactory implementation based on code structure in https://github.com/Annin7y/BakingApp
     public JobWidgetRemoteViewsFactory(Context applicationContext) {
         mContext = applicationContext;
     }
@@ -38,7 +40,9 @@ class JobWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
         Gson gson = new Gson();
         Type type = new TypeToken<List<Jobs>>() {}.getType();
         String gsonString = sharedPreferences.getString("Jobslist_Widget", "");
+
         mJobs = gson.fromJson(gsonString, type);
+        Log.d("TYPETOKEN", mJobs.get(1).getJobName()+"" );
 
 
     }
@@ -62,7 +66,7 @@ class JobWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
         itemView.setTextViewText(R.id.widget_job_loc, jobs.getLocation());
 
         Intent intent = new Intent();
-        intent.putExtra(JobWidgetProvider.EXTRA_ITEM, Parcels.wrap(jobs));
+        intent.putExtra(JobWidgetProvider.EXTRA_ITEM, String.valueOf(jobs));
         itemView.setOnClickFillInIntent(R.id.widget_job_list, intent);
 
         return itemView;

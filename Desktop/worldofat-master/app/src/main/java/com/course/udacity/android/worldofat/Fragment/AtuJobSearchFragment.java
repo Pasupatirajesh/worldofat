@@ -1,6 +1,8 @@
 package com.course.udacity.android.worldofat.Fragment;
 
 import android.app.SearchManager;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.course.udacity.android.worldofat.CertificateViewHolder;
 import com.course.udacity.android.worldofat.Fragment.JobApplyWindowFragment.OnApplyCompletedListener;
+import com.course.udacity.android.worldofat.JobWidgetProvider;
 import com.course.udacity.android.worldofat.Misc.ActionModeImplementation;
 import com.course.udacity.android.worldofat.Misc.RecyclerTouchListener;
 import com.course.udacity.android.worldofat.Model.Jobs;
@@ -211,6 +214,19 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
                                     viewHolder.mJobName.setText(model.getJobName());
                                     viewHolder.mJobLoction.setText(model.getLocation());
                                     jobsArrayList.add(model);
+                                    // Storing firebase job results for app widget update
+                                    SharedPreferences appSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                                    SharedPreferences.Editor editor = appSharedPreferences.edit();
+
+//
+
+                                    Gson gson = new Gson();
+                                    String json = gson.toJson(jobsArrayList);
+//                                    Toast.makeText(getContext(), "MESSAGE "+jobsArrayList.get(0).getJobName(), Toast.LENGTH_LONG).show();
+                                    editor.putString("Jobslist_Widget", json);
+                                    editor.apply();
+
+
                                     viewHolder.mApplyButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -247,26 +263,19 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
 
                         mRecyclerView.setAdapter(mCertificateAdapter);
 
+        //To update widgets instantaneously
 
+        Context context = getActivity().getApplicationContext();
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName thisWidget = new ComponentName(context, JobWidgetProvider.class);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_view);
 
-
-
-        // Storing firebase job results for app widget update
-        SharedPreferences appSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = appSharedPreferences.edit();
-
-//        jobsArrayList.add();
-
-        Gson gson = new Gson();
-        String json = gson.toJson(jobsArrayList);
-        editor.putString("Jobslist_Widget", json);
-        editor.apply();
-
-
-
-    }
+        }
 
     @Override
+
+
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
 
