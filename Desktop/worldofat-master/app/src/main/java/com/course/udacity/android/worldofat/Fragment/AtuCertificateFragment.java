@@ -59,17 +59,15 @@ public class AtuCertificateFragment extends BaseContainerFragment{
 
     private static FirebaseRecyclerAdapter mCertificateAdapter;
 
-    private static  FirebaseWorker mFirebaseWorker;
-
     private static String searchString;
 
     public static final String FIREBASE_PRIMARY_CHILD_NODE = "jobsearch";
 
     private SearchView mSearchView;
 
-    private static ProgressBar sProgressBar;
+    private ProgressBar sProgressBar;
 
-    private static TextView mHintsTexView;
+    private TextView mHintsTexView;
 
     private String outString="";
 

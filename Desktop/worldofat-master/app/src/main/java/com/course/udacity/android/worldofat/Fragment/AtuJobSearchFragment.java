@@ -3,9 +3,13 @@ package com.course.udacity.android.worldofat.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,8 +37,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.infoedge.android.arandomizer.DroidGenerator;
 
+import org.parceler.Parcels;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -61,16 +69,19 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
 
     private static String searchString;
 
-    public static final String FIREBASE_PRIMARY_CHILD_NODE = "jobsearch";
+    private static final String FIREBASE_PRIMARY_CHILD_NODE = "jobsearch";
 
     private SearchView mSearchView;
 
-    private static ProgressBar sProgressBar;
+    private ProgressBar sProgressBar;
 
-    private static TextView mHintsTexView;
+    private TextView mHintsTexView;
 
     private String outString="";
 
+    static ArrayList<Jobs> jobsArrayList = new ArrayList<>();
+
+    private static ArrayList<Jobs> jobsList;
     private OnApplyCompletedListener mOnApplyCompletedListener;
 
 
@@ -114,7 +125,7 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
         // Using the Droid generator library to generate random job names and locations
         DroidGenerator<Jobs> generator = new DroidGenerator<>(Jobs.class);
 
-        ArrayList<Jobs> jobsList = (ArrayList<Jobs>) generator.generate(5);
+        jobsList = (ArrayList<Jobs>) generator.generate(5);
 
         for(int i=0; i< jobsList.size(); i++) {
 
@@ -199,6 +210,7 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
                                 protected void onBindViewHolder(@NonNull CertificateViewHolder viewHolder, int i, @NonNull Jobs model) {
                                     viewHolder.mJobName.setText(model.getJobName());
                                     viewHolder.mJobLoction.setText(model.getLocation());
+                                    jobsArrayList.add(model);
                                     viewHolder.mApplyButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -211,9 +223,9 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
 
                                             JobApplyWindowFragment jobApplyWindowFragment = JobApplyWindowFragment.newInstance("Google Sign In");
                                             jobApplyWindowFragment.show(ft, "dialog");
-
-
                                         }
+
+
                                     });
                                 }
 
@@ -222,6 +234,10 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
                                     super.onDataChanged();
                                     sProgressBar.setVisibility(ProgressBar.INVISIBLE);
                                     mHintsTexView.setVisibility(TextView.INVISIBLE);
+
+
+
+
                                 }
                             };
                         } else{
@@ -230,6 +246,23 @@ public class AtuJobSearchFragment extends BaseContainerFragment{
                         }
 
                         mRecyclerView.setAdapter(mCertificateAdapter);
+
+
+
+
+
+        // Storing firebase job results for app widget update
+        SharedPreferences appSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = appSharedPreferences.edit();
+
+//        jobsArrayList.add();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(jobsArrayList);
+        editor.putString("Jobslist_Widget", json);
+        editor.apply();
+
+
 
     }
 

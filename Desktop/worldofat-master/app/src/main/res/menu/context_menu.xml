@@ -5,9 +5,9 @@
     <item android:id="@+id/cut_copy_menu"
           android:title="@string/floating_menu"
           android:icon="@drawable/ic_action_share_to_keep"
-          app:showAsAction="always"/>
+        android:showAsAction="always" />
     <item android:id="@+id/share_to_keep"
           android:title="@string/save_in_keep"
           android:icon="@drawable/ic_share_black_24dp"
-          app:showAsAction="always"/>
+        android:showAsAction="always" />
 </menu>

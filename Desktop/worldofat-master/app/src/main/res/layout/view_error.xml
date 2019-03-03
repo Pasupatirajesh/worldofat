@@ -2,11 +2,13 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="300dp"
-    android:gravity="center">
+    android:gravity="center"
+    tools:keep="@layout/view_error">
 
     <TextView
         android:id="@+id/retry_text"
